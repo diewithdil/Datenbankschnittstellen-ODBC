@@ -55,7 +55,7 @@ def getMitarbeiter(p_nlnr):
     cursor = conn.cursor()
 
     try:
-        cursor.execute('SELECT MitID, MitName from Mitarbeiter where nlnr = ?', (p_nlnr))
+        cursor.execute('SELECT MitID, MitName from Mitarbeiter where NiederlassungNR = ?', (p_nlnr))
     except:
         print('Abfrage ist fehlerhaft')
         cursor.close()
@@ -111,7 +111,7 @@ def getAuftrag(p_mitnr):
         liste_mit.append(int(row[0]))
 
     try:
-        cursor.execute('Select AufNr, MitID, KunNr, AufDat, ErlDat, Dauer, Anfahrt, Beschreibung FROM Auftrag WHERE Datepart(wk, ErlDat) = Datepart(wk, GetDate()) + 1 AND Year(ErlDat) = 2023 AND MitID = ? ORDER BY ErlDat', (p_mitnr))  
+        cursor.execute('Select Aufnr, MitID, KunNr, AufDat, ErlDat, Dauer, Anfahrt, Beschreibung FROM Auftrag WHERE Datepart(wk, ErlDat) = Datepart(wk, GetDate()) + 1 AND Year(ErlDat) = 2023 AND MitID = ? ORDER BY ErlDat', (p_mitnr))  
     except: 
         print('Abfrage ist fehlerhaft')
         cursor.close()
@@ -127,7 +127,7 @@ def getAuftrag(p_mitnr):
     print('\nAufträge der nächsten Woche:')
     liste_auf = [0]
     for row in cursor: 
-        print(row.AufNr, row.MitID, row.KunNr, row.AufDat, row.ErlDat, row.Dauer, row.Anfahrt, row.Beschreibung)
+        print(row.Aufnr, row.MitID, row.KunNr, row.AufDat, row.ErlDat, row.Dauer, row.Anfahrt, row.Beschreibung)
         liste_auf.append(int(row[0]))   
 
     cursor.close()
